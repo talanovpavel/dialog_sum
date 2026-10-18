@@ -1,0 +1,21 @@
+seed: 42
+
+data:
+  train_path: data/train.csv
+  test_path: data/small_test.csv
+  dialogue_col: dialogue
+  summary_col: summary
+
+prompt:
+  system: Summarize this text. Use given examples
+  n_examples: 5
+
+llm:
+  model: Qwen/Qwen2.5-0.5B-Instruct
+  dtype: half
+
+sampling:
+  max_tokens: 128
+  temperature: 0.0
+
+result_path: data/results.csv

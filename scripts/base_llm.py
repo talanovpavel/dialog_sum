@@ -12,8 +12,8 @@ import click
 
 logger = logging.getLogger(__name__)
 
-def make_prompts(train_path=TRAIN_PATH,
-                 test_path=TEST_CLEAN_PATH,
+def make_prompts(train_path,
+                 test_path,
                  system='Summarize this text. Use given examples',
                  n_examples=5,
                  dialogue_col='dialogue',
@@ -46,12 +46,12 @@ def make_prompts(train_path=TRAIN_PATH,
 
 def get_outputs(conversations, llm_params, sampling_params):
     llm = LLM(
-        llm_params
+        **llm_params
     )
 
     outputs = llm.chat(
         conversations,
-        SamplingParams(sampling_params)
+        SamplingParams(**sampling_params)
     )
 
     return outputs
@@ -87,7 +87,9 @@ def make_results_table(
 def main(config_path):
     config = load_config(config_path)
 
-    conversations = make_prompts(config['data'], config['prompt'])
+    conversations = make_prompts(train_path=config['data']['train_path'],
+                                 test_path=config['data']['test_path'],
+                                 **config['prompt'])
 
     outputs = get_outputs(conversations, config['llm'], config['sampling'])
 
