@@ -1,5 +1,5 @@
 import csv
-import pathlib
+from pathlib import Path
 import yaml
 
 def log_results(results_path,
@@ -7,6 +7,7 @@ def log_results(results_path,
     """
     Write one row of experiment to CSV file
     """
+    results_path = Path(results_path)
 
     file_exists = results_path.is_file()
     results_path.parent.mkdir(parents=True, exist_ok=True)
