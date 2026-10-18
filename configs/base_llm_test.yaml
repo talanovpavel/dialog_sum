@@ -7,7 +7,7 @@ data:
   test_path: data/small_test.csv
   dialogue_col: dialogue
   summary_col: summary
-  output_path: data/base_llm_results.csv
+  output_path: data/base_llm_test_results.csv
 
 prompt:
   system: Summarize this text. Use given examples
