@@ -14,10 +14,9 @@ dependencies = [
     "sacrebleu>=2.6.0",
     "seaborn>=0.13.2",
     "textstat>=0.7.13",
-    "torch>=2.14.1",
 ]
 
-[project-optional-dependencies]
+[project.optional-dependencies]
 colab = [
     "vllm; sys_platform == 'linux'",
 ]
