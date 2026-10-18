@@ -2,7 +2,6 @@ import logging
 
 from vllm import LLM
 from vllm import SamplingParams
-from scripts.config import SEED, TRAIN_PATH, TEST_CLEAN_PATH, RESULTS_PATH
 import pandas as pd
 
 from scripts.metrics import count_metrics
@@ -73,7 +72,7 @@ def make_llm_results_dict(
 
 def make_results_table(
         rows,
-        test_path=TEST_CLEAN_PATH
+        test_path
 ):
 
     test = pd.read_csv(test_path)
