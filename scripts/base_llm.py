@@ -10,6 +10,8 @@ from scripts.utils import log_results, load_config
 
 import click
 
+logger = logging.getLogger(__name__)
+
 def make_prompts(train_path=TRAIN_PATH,
                  test_path=TEST_CLEAN_PATH,
                  system='Summarize this text. Use given examples',
@@ -79,7 +81,6 @@ def make_results_table(
 
     return pd.merge(test, result_df, how='left', left_on='dialogue', right_on='text').drop(columns='text')
 
-logger = logging.getLogger(__name__)
 
 @click.command()
 @click.option('--config', 'config_path', required=True)
@@ -100,3 +101,8 @@ def main(config_path):
     log_results(config['result_path'], metrics)
     logger.info("Results saved to %s",
                 config['result_path'])
+
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    main()
