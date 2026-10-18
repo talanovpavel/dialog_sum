@@ -45,7 +45,7 @@ def main(config_path):
     logger.info("Baseline metrics: %s", result)
     result['name'] = 'baseline'
 
-    log_results(config['result_path'], result)
+    log_results(config['result_path'], config['name'], result)
     logger.info("Results saved to %s",
                 config['result_path'])
 

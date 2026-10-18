@@ -3,10 +3,13 @@ from pathlib import Path
 import yaml
 
 def log_results(results_path,
+                name:str,
                 row:dict):
     """
     Write one row of experiment to CSV file
     """
+    row['name'] = name
+
     results_path = Path(results_path)
 
     file_exists = results_path.is_file()

@@ -116,7 +116,7 @@ def main(config_path):
     logger.info("LLM metrics: %s", metrics)
 
     logger.info("[6/6] Saving results")
-    log_results(config['result_path'], metrics)
+    log_results(config['result_path'], config['name'], metrics)
     logger.info("Results saved to %s", config['result_path'])
     logger.info("Done in %.1f s", time.perf_counter() - t_start)
 

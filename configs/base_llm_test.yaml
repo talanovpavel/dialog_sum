@@ -1,5 +1,7 @@
 seed: 42
 
+name: base_llm_test
+
 data:
   train_path: data/train.csv
   test_path: data/small_test.csv
@@ -19,4 +21,4 @@ sampling:
   max_tokens: 128
   temperature: 0.0
 
-result_path: data/results.csv
+result_path: results/results.csv

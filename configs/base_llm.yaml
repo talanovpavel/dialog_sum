@@ -1,11 +1,13 @@
 seed: 42
 
+name: base_llm
+
 data:
   train_path: data/train.csv
   test_path: data/test_clean.csv
   dialogue_col: dialogue
   summary_col: summary
-  outputs_path: data/base_llm_results.csv
+  output_path: data/base_llm_results.csv
 
 prompt:
   system: Summarize this text. Use given examples
@@ -19,4 +21,4 @@ sampling:
   max_tokens: 128
   temperature: 0.0
 
-result_path: data/results.csv
+result_path: results/results.csv
