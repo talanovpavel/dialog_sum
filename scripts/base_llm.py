@@ -110,7 +110,7 @@ def main(config_path):
     logger.info("[5/6] Building results table and computing metrics")
     res_table = make_results_table(rows, config['data']['test_path'])
     logger.info("Results table: %d rows", len(res_table))
-    res_table.to_csv(config['data']['output_path'])
+    res_table.to_csv(config['data']['output_path'], index=False)
     logger.info("Outputs table saved to %s", config['data']['output_path'])
     metrics = count_metrics(res_table, hyps_col='output', refs_col='summary')
     logger.info("LLM metrics: %s", metrics)
