@@ -1,0 +1,6 @@
+dialogue_col: dialogue
+hyps_col: baseline
+refs_col: summary
+result_path: data/results.csv
+test_path: data/test_clean.csv
+baseline_path: data/baseline.csv

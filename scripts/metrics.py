@@ -62,7 +62,7 @@ def rouge(
 def llm_as_judge():
     ...
 
-def count_metrics(df, hyps_col, refs_col, results_path):
+def count_metrics(df, hyps_col, refs_col):
 
     bleu_score = bleu(df, hyps_col, refs_col)
     rouge_score = rouge(df, hyps_col, refs_col)

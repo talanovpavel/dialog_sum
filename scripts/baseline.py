@@ -1,10 +1,11 @@
+import click
 from nltk.tokenize import sent_tokenize
 import pandas as pd
 import logging
 
 from scripts.config import TEST_CLEAN_PATH, BASELINE_PATH, RESULTS_PATH
 from scripts.metrics import count_metrics
-from scripts.utils import log_results
+from scripts.utils import log_results, load_config
 
 logger = logging.getLogger(__name__)
 
@@ -28,22 +29,26 @@ def apply_baseline(df,
 
     return df
 
-def run():
-    df = pd.read_csv(TEST_CLEAN_PATH)
-    df_baseline = apply_baseline(df,
-                                 dialogue_col="dialogue")
-    df_baseline.to_csv(BASELINE_PATH)
-    logger.info("Baseline saved to %s",
-                BASELINE_PATH)
+@click.command()
+@click.option('--config', 'config_path', required=True)
+def main(config_path):
+    config = load_config(config_path)
 
-    result = count_metrics(df_baseline, hyps_col="baseline", refs_col="summary", results_path=RESULTS_PATH)
+    df = pd.read_csv(config['test_path'])
+    df_baseline = apply_baseline(df,
+                                 dialogue_col=config['dialogue_col'])
+    df_baseline.to_csv(config['baseline_path'])
+    logger.info("Baseline saved to %s",
+                config['baseline_path'])
+
+    result = count_metrics(df_baseline, hyps_col=config['hyps_col'], refs_col=config['refs_col'])
     logger.info("Baseline metrics: %s", result)
     result['name'] = 'baseline'
 
-    log_results(RESULTS_PATH, result)
+    log_results(config['result_path'], result)
     logger.info("Results saved to %s",
-                RESULTS_PATH)
+                config['result_path'])
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    run()
+    main()

@@ -1,5 +1,6 @@
 import csv
 import pathlib
+import yaml
 
 def log_results(results_path,
                 row:dict):
@@ -18,3 +19,6 @@ def log_results(results_path,
 
         writer.writerow(row)
 
+def load_config(path) -> dict:
+    with open(path, "r") as f:
+        return yaml.safe_load(f)
