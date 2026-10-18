@@ -8,6 +8,7 @@ from scripts.metrics import count_metrics
 from scripts.utils import log_results, load_config
 
 import click
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -44,14 +45,19 @@ def make_prompts(train_path,
     return conversations
 
 def get_outputs(conversations, llm_params, sampling_params):
-    llm = LLM(
-        **llm_params
-    )
+    t = time.perf_counter()
+    logger.info("Loading model: %s", llm_params.get('model'))
+    llm = LLM(**llm_params)
+    logger.info("Model loaded (%.1f s)", time.perf_counter() - t)
 
+    t = time.perf_counter()
+    logger.info("Generating outputs for %d dialogues...", len(conversations))
     outputs = llm.chat(
         conversations,
-        SamplingParams(**sampling_params)
+        SamplingParams(**sampling_params),
+        use_tqdm=True,
     )
+    logger.info("Generation finished (%.1f s)", time.perf_counter() - t)
 
     return outputs
 
@@ -83,25 +89,36 @@ def make_results_table(
 
 @click.command()
 @click.option('--config', 'config_path', required=True)
+@click.command()
+@click.option('--config', 'config_path', required=True)
 def main(config_path):
+    t_start = time.perf_counter()
+
+    logger.info("[1/6] Loading config: %s", config_path)
     config = load_config(config_path)
 
+    logger.info("[2/6] Building prompts")
     conversations = make_prompts(train_path=config['data']['train_path'],
                                  test_path=config['data']['test_path'],
                                  **config['prompt'])
+    logger.info("Prompts created: %d", len(conversations))
 
+    logger.info("[3/6] Running inference")
     outputs = get_outputs(conversations, config['llm'], config['sampling'])
 
+    logger.info("[4/6] Collecting LLM results")
     rows = make_llm_results_dict(conversations, outputs)
 
+    logger.info("[5/6] Building results table and computing metrics")
     res_table = make_results_table(rows, config['data']['test_path'])
-
+    logger.info("Results table: %d rows", len(res_table))
     metrics = count_metrics(res_table, hyps_col='output', refs_col='summary')
     logger.info("LLM metrics: %s", metrics)
 
+    logger.info("[6/6] Saving results")
     log_results(config['result_path'], metrics)
-    logger.info("Results saved to %s",
-                config['result_path'])
+    logger.info("Results saved to %s", config['result_path'])
+    logger.info("Done in %.1f s", time.perf_counter() - t_start)
 
 
 if __name__ == '__main__':
