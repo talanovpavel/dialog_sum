@@ -89,8 +89,6 @@ def make_results_table(
 
 @click.command()
 @click.option('--config', 'config_path', required=True)
-@click.command()
-@click.option('--config', 'config_path', required=True)
 def main(config_path):
     t_start = time.perf_counter()
 
