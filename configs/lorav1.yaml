@@ -21,7 +21,7 @@ seed: 42
 name: qwen2.5_0.5B_fine_tuned
 
 prompt:
-  system: Summarize this text. Use given examples
+  system: 'Summarize this text: \n'
   few_shot: False
 
 result_path: results/results.csv
