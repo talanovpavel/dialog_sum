@@ -1,0 +1,18 @@
+INSTRUCTION: 'Summarize this text: \n'
+
+data:
+  train_path: 'data/train.csv'
+  test_path: data/small_test.csv
+  dialogue_col: dialogue
+  summary_col: summary
+  output_path: data/base_llm_results.csv
+  save_path: 'models/lora_v1'
+  result_path: results/results.csv
+
+sampling:
+  max_tokens: 128
+  temperature: 0.0
+
+llm:
+  dtype: half
+  model: unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit

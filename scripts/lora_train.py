@@ -68,10 +68,3 @@ def train(config_path):
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     train()
-
-
-    """
-    туду:
-    2) добавить логи
-    3) добавить прогресс бар или подобную хуйнюшку(wandb)
-    """

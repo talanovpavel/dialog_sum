@@ -1,8 +1,13 @@
-model: unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit
 INSTRUCTION: 'Summarize this text: \n'
-save_path: 'models/lora_1v'
-train_path: 'data/train.csv'
-val_path: 'data/validation.csv'
+
+data:
+  train_path: 'data/train.csv'
+  test_path: data/test_clean.csv
+  dialogue_col: dialogue
+  summary_col: summary
+  output_path: data/base_llm_results.csv
+  save_path: 'models/lora_v1'
+  result_path: results/results.csv
 
 sampling:
   max_tokens: 128
@@ -10,3 +15,4 @@ sampling:
 
 llm:
   dtype: half
+  model: unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit
