@@ -42,8 +42,8 @@ def train(config_path):
     train_ds = Dataset.from_pandas(train_df[['messages']], preserve_index=False)
     logger.info("Dataset created: %d examples", len(train_ds))
 
-    logger.info("[3/5] Loading model: %s", config['model'])
-    model, tokenizer = FastLanguageModel.from_pretrained(config['model'])
+    logger.info("[3/5] Loading model: %s", config['data']['model'])
+    model, tokenizer = FastLanguageModel.from_pretrained(config['data']['model'])
     model = FastLanguageModel.get_peft_model(model)
     logger.info("LoRA adapters attached")
 
@@ -58,9 +58,9 @@ def train(config_path):
     logger.info("Training finished in %.1f s", time.perf_counter() - t_train)
     logger.info("Train metrics: %s", train_result.metrics)
 
-    logger.info("[5/5] Saving merged model to %s", config['save_path'])
-    model.save_pretrained_merged(config['save_path'], tokenizer, save_method="merged_16bit")
-    logger.info("Model saved to %s", config['save_path'])
+    logger.info("[5/5] Saving merged model to %s", config['data']['save_path'])
+    model.save_pretrained_merged(config['data']['save_path'], tokenizer, save_method="merged_16bit")
+    logger.info("Model saved to %s", config['data']['save_path'])
 
     logger.info("Done in %.1f s", time.perf_counter() - t_start)
 
