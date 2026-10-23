@@ -38,7 +38,7 @@ def make_results_table(
 
     return pd.merge(test, result_df, how='left', left_on='dialogue', right_on='text').drop(columns='text')
 
-def get_outputs(conversations, llm_params, sampling_params, logger):
+def get_outputs(conversations, llm_params, sampling_params):
     t = time.perf_counter()
     logger.info("Loading model: %s", llm_params.get('model'))
     llm = LLM(**llm_params)
