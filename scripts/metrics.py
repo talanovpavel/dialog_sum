@@ -2,9 +2,7 @@ import sacrebleu
 from rouge_score import rouge_scorer
 import numpy as np
 
-from scripts.config import RESULTS_PATH
 from scripts.utils import log_results
-
 
 def bleu(
         df,
@@ -59,8 +57,6 @@ def rouge(
 
     return result
 
-def llm_as_judge():
-    ...
 
 def count_metrics(df, hyps_col, refs_col):
 
