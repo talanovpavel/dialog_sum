@@ -2,8 +2,6 @@ import csv
 from pathlib import Path
 import yaml
 
-from vllm import LLM
-from vllm import SamplingParams
 
 def log_results(results_path,
                 name:str,
