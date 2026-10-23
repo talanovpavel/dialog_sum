@@ -14,5 +14,4 @@ sampling:
   temperature: 0.0
 
 llm:
-  dtype: half
   model: unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit
