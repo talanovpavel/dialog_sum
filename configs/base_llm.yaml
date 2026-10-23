@@ -1,0 +1,25 @@
+seed: 42
+
+name: base_llm
+
+data:
+  train_path: data/train.csv
+  test_path: data/test_clean.csv
+  dialogue_col: dialogue
+  summary_col: summary
+  output_path: data/base_llm_results.csv
+
+prompt:
+  system: Summarize this text. Use given examples
+  n_examples: 5
+  few_shot: True
+
+llm:
+  model: Qwen/Qwen2.5-0.5B-Instruct
+  dtype: half
+
+sampling:
+  max_tokens: 128
+  temperature: 0.0
+
+result_path: results/results.csv

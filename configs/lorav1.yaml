@@ -1,0 +1,27 @@
+INSTRUCTION: 'Summarize this text: \n'
+
+data:
+  train_path: data/train.csv
+  test_path: data/test_clean.csv
+  dialogue_col: dialogue
+  summary_col: summary
+  output_path: data/finetuned_llm_results.csv
+  save_path: 'models/lora_v1'
+  result_path: results/results.csv
+
+sampling:
+  max_tokens: 128
+  temperature: 0.0
+
+llm:
+  model: 'models/lora_v1'
+
+seed: 42
+
+name: qwen2.5_0.5B_fine_tuned
+
+prompt:
+  system: 'Summarize this text: \n'
+  few_shot: False
+
+result_path: results/results.csv
