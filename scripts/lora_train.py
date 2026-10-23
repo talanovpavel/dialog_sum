@@ -42,8 +42,8 @@ def train(config_path):
     train_ds = Dataset.from_pandas(train_df[['messages']], preserve_index=False)
     logger.info("Dataset created: %d examples", len(train_ds))
 
-    logger.info("[3/5] Loading model: %s", config['data']['model'])
-    model, tokenizer = FastLanguageModel.from_pretrained(config['data']['model'])
+    logger.info("[3/5] Loading model: %s", config['llm']['model'])
+    model, tokenizer = FastLanguageModel.from_pretrained(config['llm']['model'])
     model = FastLanguageModel.get_peft_model(model)
     logger.info("LoRA adapters attached")
 
