@@ -19,7 +19,8 @@ dependencies = [
 [project.optional-dependencies]
 colab = [
     "vllm; sys_platform == 'linux'",
-    "unsloth; sys_platform == 'linux'",
+    "unsloth>=2026.10.7; sys_platform == 'linux'",
+    "unsloth-zoo>=2026.10.6; sys_platform == 'linux'",
     "trl; sys_platform == 'linux'",
     "datasets; sys_platform == 'linux'",
 ]
