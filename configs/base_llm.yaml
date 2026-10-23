@@ -12,6 +12,7 @@ data:
 prompt:
   system: Summarize this text. Use given examples
   n_examples: 5
+  few_shot: True
 
 llm:
   model: Qwen/Qwen2.5-0.5B-Instruct

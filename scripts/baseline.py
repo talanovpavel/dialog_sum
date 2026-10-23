@@ -3,7 +3,6 @@ from nltk.tokenize import sent_tokenize
 import pandas as pd
 import logging
 
-from scripts.config import TEST_CLEAN_PATH, BASELINE_PATH, RESULTS_PATH
 from scripts.metrics import count_metrics
 from scripts.utils import log_results, load_config
 

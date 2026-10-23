@@ -1,11 +1,11 @@
 INSTRUCTION: 'Summarize this text: \n'
 
 data:
-  train_path: 'data/train.csv'
+  train_path: data/train.csv
   test_path: data/small_test.csv
   dialogue_col: dialogue
   summary_col: summary
-  output_path: data/base_llm_results.csv
+  output_path: data/finetuned_llm_results.csv
   save_path: 'models/lora_v1'
   result_path: results/results.csv
 
@@ -14,4 +14,14 @@ sampling:
   temperature: 0.0
 
 llm:
-  model: unsloth/Qwen2.5-0.5B-Instruct-bnb-4bit
+  model: 'models/lora_v1'
+
+seed: 42
+
+name: qwen2.5_0.5B_fine_tuned
+
+prompt:
+  system: Summarize this text. Use given examples
+  few_shot: False
+
+result_path: results/results.csv
