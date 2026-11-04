@@ -51,4 +51,10 @@ I ran out of limits, so there are no results in the repository
 
     uv run python -m scripts.llm_as_judge --config configs/llm_as_jugde.yaml
 
+## 6) Results
 
+| name | rouge1 | rouge2 | rougeL | bleu |
+|:-----|-------:|-------:|-------:|------:|
+| baseline | 0.2681 | 0.0718 | 0.2310 | 10.26 |
+| qwen2.5_0.5B | 0.3461 | 0.1345 | 0.2730 | 10.57 |
+| qwen2.5_0.5B_fine_tuned | **0.4929** | **0.2411** | **0.4112** | **27.32** |
