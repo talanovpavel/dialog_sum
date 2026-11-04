@@ -9,8 +9,11 @@ from scripts.utils import log_results, load_config
 logger = logging.getLogger(__name__)
 
 
-def baseline(dialogue):
-    """Create a summary from the first and last sentences of a dialogue."""
+def baseline(dialogue: str
+) -> str:
+    """
+    Create a summary from the first and last sentences of a dialogue
+    """
 
     sents = sent_tokenize(dialogue.strip())
 
@@ -20,10 +23,12 @@ def baseline(dialogue):
     return sents[0] if len(sents) == 1 else sents[0] + ' ' + sents[-1]
 
 
-def apply_baseline(df,
+def apply_baseline(df: pd.DataFrame,
                    dialogue_col: str
-                   ):
-    """Apply the baseline summarization to a DataFrame column."""
+) -> pd.DataFrame:
+    """
+    Apply the baseline summarization to a DataFrame column
+    """
 
     df = df.copy()
     df['baseline'] = df[dialogue_col].apply(baseline)
@@ -33,7 +38,11 @@ def apply_baseline(df,
 
 @click.command()
 @click.option('--config', 'config_path', required=True)
-def main(config_path):
+def main(config_path: str
+) -> None:
+    """
+    Builds the baseline summaries for the test set, saves them and logs metrics
+    """
     config = load_config(config_path)
 
     df = pd.read_csv(config['test_path'])

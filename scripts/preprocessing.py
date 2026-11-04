@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 def remove_duplicates(df: pd.DataFrame,
                       cols: list[str]
-                      ) -> pd.DataFrame:
+) -> pd.DataFrame:
     """
     Remove duplicates from DataFrame based on cols
     """
@@ -24,7 +24,11 @@ def remove_duplicates(df: pd.DataFrame,
 
 @click.command()
 @click.option('--config', 'config_path', required=True)
-def main(config_path):
+def main(config_path: str
+) -> None:
+    """
+    Removes duplicates from the test set and saves the cleaned csv
+    """
     config = load_config(config_path)
 
     df = pd.read_csv(config['test_path'])

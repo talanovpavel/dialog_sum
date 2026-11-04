@@ -12,12 +12,22 @@ from scripts.utils import load_config
 logger = logging.getLogger(__name__)
 
 
-def load_dataset(train_path):
+def load_dataset(train_path: str
+) -> pd.DataFrame:
+    """
+    Reads the train csv into a DataFrame
+    """
     return pd.read_csv(train_path)
 
 
-def make_messages(train_df, INSTRUCTION):
-    def to_messages(row):
+def make_messages(train_df: pd.DataFrame,
+                  INSTRUCTION: str
+) -> pd.DataFrame:
+    """
+    Adds 'messages' column: chat of user (INSTRUCTION + dialogue) and assistant (summary)
+    """
+    def to_messages(row: pd.Series
+    ) -> list[dict]:
         return [
             {"role": "user", "content": INSTRUCTION + row['dialogue']},
             {"role": "assistant", "content": row['summary']},
@@ -29,7 +39,11 @@ def make_messages(train_df, INSTRUCTION):
 
 @click.command()
 @click.option('--config', 'config_path', required=True)
-def train(config_path):
+def train(config_path: str
+) -> None:
+    """
+    LoRA fine-tuning of the LLM on dialogue summaries and saving the merged model
+    """
     t_start = time.perf_counter()
 
     logger.info("[1/5] Loading config: %s", config_path)

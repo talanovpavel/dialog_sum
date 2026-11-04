@@ -5,10 +5,9 @@ import numpy as np
 from scripts.utils import log_results
 
 
-def bleu(
-        df,
-        hyps_col: str,
-        refs_col: str,
+def bleu(df,
+         hyps_col: str,
+         refs_col: str,
 ) -> float:
     """
     Corpus BLEU (sacrebleu) per dialog:
@@ -30,10 +29,9 @@ def bleu(
     return bleu.score
 
 
-def rouge(
-        df,
-        hyps_col: str,
-        refs_col: str
+def rouge(df,
+          hyps_col: str,
+          refs_col: str
 ) -> dict:
     """
     Mean ROUGE-1/2/L (stemmed F-measure) over samples; per sample, takes the max over its references;
@@ -60,7 +58,14 @@ def rouge(
     return result
 
 
-def count_metrics(df, hyps_col, refs_col):
+def count_metrics(df,
+                  hyps_col: str,
+                  refs_col: str
+) -> dict:
+    """
+    Computes all metrics on the dataframe: ROUGE-1/2/L and corpus BLEU;
+    returns a dict {metric: score} with keys rouge1, rouge2, rougeL, bleu
+    """
     bleu_score = bleu(df, hyps_col, refs_col)
     rouge_score = rouge(df, hyps_col, refs_col)
 

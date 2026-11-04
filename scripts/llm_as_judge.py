@@ -13,8 +13,11 @@ from scripts.utils import load_config
 logger = logging.getLogger(__name__)
 
 
-def make_faithfulness_coverage_df(test_path, base_llm_path, finetuned_path,
-                                  result_path, text_col='dialogue'):
+def make_faithfulness_coverage_df(test_path,
+                                  base_llm_path,
+                                  finetuned_path,
+                                  result_path,
+                                  text_col='dialogue'):
     test = pd.read_csv(test_path, keep_default_na=False)
     test = test.drop_duplicates(text_col).reset_index(drop=True)
     test = test.loc[:, ~test.columns.str.startswith('Unnamed:')]

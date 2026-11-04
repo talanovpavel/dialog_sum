@@ -14,10 +14,13 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 
-def make_llm_results_dict(
-        conversations,
-        outputs
-):
+def make_llm_results_dict(conversations: list[list[dict]],
+                          outputs: list
+) -> list[dict]:
+    """
+    Builds rows {text, output}: text = last message of the conversation (test dialogue),
+    output = stripped generated text of the first completion
+    """
     rows = []
     texts = [t[-1]['content'] for t in conversations]
 
@@ -30,17 +33,25 @@ def make_llm_results_dict(
     return rows
 
 
-def make_results_table(
-        rows,
-        test_path
-):
+def make_results_table(rows: list[dict],
+                       test_path: str
+) -> pd.DataFrame:
+    """
+    Left-merges generated outputs into the test set by dialogue text
+    """
     test = pd.read_csv(test_path)
     result_df = pd.DataFrame(rows)
 
     return pd.merge(test, result_df, how='left', left_on='dialogue', right_on='text').drop(columns='text')
 
 
-def get_outputs(conversations, llm_params, sampling_params):
+def get_outputs(conversations: list[list[dict]],
+                llm_params: dict,
+                sampling_params: dict
+) -> list:
+    """
+    Loads the vLLM model and generates chat outputs for all conversations
+    """
     t = time.perf_counter()
     logger.info("Loading model: %s", llm_params.get('model'))
     llm = LLM(**llm_params)
@@ -58,14 +69,19 @@ def get_outputs(conversations, llm_params, sampling_params):
     return outputs
 
 
-def make_prompts(train_path,
-                 test_path,
-                 system='Summarize this text. Use given examples',
-                 few_shot=True,
-                 n_examples=5,
-                 dialogue_col='dialogue',
-                 summary_col='summary'
-                 ):
+def make_prompts(train_path: str,
+                 test_path: str,
+                 system: str = 'Summarize this text. Use given examples',
+                 few_shot: bool = True,
+                 n_examples: int = 5,
+                 dialogue_col: str = 'dialogue',
+                 summary_col: str = 'summary'
+) -> list[list[dict]]:
+    """
+    Builds chat prompts for each unique test dialogue:
+    system message, optional few-shot examples from the first n_examples unique train rows,
+    then the test dialogue as the user message
+    """
     test = pd.read_csv(test_path)
     train = pd.read_csv(train_path)
 
@@ -105,7 +121,11 @@ def make_prompts(train_path,
 
 @click.command()
 @click.option('--config', 'config_path', required=True)
-def main(config_path):
+def main(config_path: str
+) -> None:
+    """
+    Runs LLM inference on the test set, saves outputs table and logs metrics
+    """
     t_start = time.perf_counter()
 
     logger.info("[1/6] Loading config: %s", config_path)
