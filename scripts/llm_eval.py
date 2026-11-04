@@ -13,6 +13,7 @@ import pandas as pd
 
 logger = logging.getLogger(__name__)
 
+
 def make_llm_results_dict(
         conversations,
         outputs
@@ -22,21 +23,22 @@ def make_llm_results_dict(
 
     for text, out in zip(texts, outputs):
         rows.append({
-        "text": text,
-        "output": out.outputs[0].text.strip()
+            "text": text,
+            "output": out.outputs[0].text.strip()
         })
 
     return rows
+
 
 def make_results_table(
         rows,
         test_path
 ):
-
     test = pd.read_csv(test_path)
     result_df = pd.DataFrame(rows)
 
     return pd.merge(test, result_df, how='left', left_on='dialogue', right_on='text').drop(columns='text')
+
 
 def get_outputs(conversations, llm_params, sampling_params):
     t = time.perf_counter()

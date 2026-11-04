@@ -4,11 +4,12 @@ import numpy as np
 
 from scripts.utils import log_results
 
+
 def bleu(
         df,
-        hyps_col:str,
-        refs_col:str,
-)-> float:
+        hyps_col: str,
+        refs_col: str,
+) -> float:
     """
     Corpus BLEU (sacrebleu) per dialog:
     dialog = id without last '_N';
@@ -28,11 +29,12 @@ def bleu(
     bleu = sacrebleu.corpus_bleu(hyps, refs)
     return bleu.score
 
+
 def rouge(
         df,
         hyps_col: str,
         refs_col: str
-)-> dict:
+) -> dict:
     """
     Mean ROUGE-1/2/L (stemmed F-measure) over samples; per sample, takes the max over its references;
     returns a dict {metric: mean score}
@@ -59,7 +61,6 @@ def rouge(
 
 
 def count_metrics(df, hyps_col, refs_col):
-
     bleu_score = bleu(df, hyps_col, refs_col)
     rouge_score = rouge(df, hyps_col, refs_col)
 

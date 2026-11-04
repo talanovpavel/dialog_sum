@@ -4,8 +4,8 @@ import yaml
 
 
 def log_results(results_path,
-                name:str,
-                row:dict):
+                name: str,
+                row: dict):
     """
     Write one row of experiment to CSV file
     """
@@ -23,6 +23,7 @@ def log_results(results_path,
             writer.writeheader()
 
         writer.writerow(row)
+
 
 def load_config(path) -> dict:
     with open(path, "r") as f:

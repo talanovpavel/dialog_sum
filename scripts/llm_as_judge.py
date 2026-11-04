@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 def make_faithfulness_coverage_df(test_path, base_llm_path, finetuned_path,
-                                result_path, text_col='dialogue'):
+                                  result_path, text_col='dialogue'):
     test = pd.read_csv(test_path, keep_default_na=False)
     test = test.drop_duplicates(text_col).reset_index(drop=True)
     test = test.loc[:, ~test.columns.str.startswith('Unnamed:')]
@@ -50,7 +50,7 @@ def make_messages(system, user, data_path, text_col):
 
 
 def get_questions(model, messages, temperature, client=None,
-                               request_delay=0):
+                  request_delay=0):
     client = client if client is not None else Groq()
     questions = []
 
@@ -67,7 +67,7 @@ def get_questions(model, messages, temperature, client=None,
         qs = result['questions']
 
         if not isinstance(qs, list) or any(
-            not isinstance(q, str) or not q.strip() for q in qs
+                not isinstance(q, str) or not q.strip() for q in qs
         ):
             raise ValueError("Judge must return a list of question strings")
 
@@ -77,7 +77,7 @@ def get_questions(model, messages, temperature, client=None,
 
 
 def get_answers(model, answer_prompt, text, questions, temperature,
-                             client=None, request_delay=0):
+                client=None, request_delay=0):
     """Get answers to all questions about one text in a single request."""
     if not questions:
         return []
