@@ -1,0 +1,5 @@
+test_path: data/test.csv
+test_clean_path: data/test_clean.csv
+cols:
+  - dialogue
+  - summary
